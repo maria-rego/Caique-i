@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eu Te Amo Caique ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9ecb, #ffb7d5, #ffdfd3);
+            padding: 20px;
+        }
+        
+        .ipad {
+            width: 500px;
+            height: 700px;
+            background: #ffecf0;
+            border-radius: 40px;
+            box-shadow: 0 15px 50px rgba(255, 105, 180, 0.3), 
+                        0 0 0 15px #ff85c0, 
+                        0 0 0 20px #ffc2d6;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #fff0f5, #ffe6ee);
+            border-radius: 30px;
+            overflow: hidden;
+            color: #ff1493;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 20px;
+            align-items: center;
+        }
+        
+        .home-button {
+            position: absolute;
+            bottom: 15px;
+            width: 50px;
+            height: 50px;
+            background: #ff85c0;
+            border-radius: 50%;
+            border: 2px solid #ff69b4;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+        
+        .album-art {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(45deg, #ff9ecb, #ff69b4);
+            border-radius: 20px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 5px solid #ffb6c1;
+        }
+        
+        .album-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .album-art .deftones-logo {
+            width: 80%;
+            height: auto;
+            opacity: 0.9;
+        }
+        
+        .song-info {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .song-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #ff1493;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .song-artist {
+            font-size: 18px;
+            color: #ff69b4;
+            margin-bottom: 30px;
+        }
+        
+        .progress-container {
+            width: 80%;
+            height: 8px;
+            background: #ffd1dc;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #ff69b4, #ff1493);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+        
+        .time-display {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+            color: #ff69b4;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ffd1dc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            color: #ff1493;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.05);
+            background: #ffc2d6;
+        }
+        
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            color: white;
+        }
+        
+        .play-btn:hover {
+            background: linear-gradient(135deg, #ff85c0, #ff3399);
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
+        }
+        
+        .volume-controls {
+            margin-top: 30px;
+            width: 80%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .volume-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            background: #ffd1dc;
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #ff1493;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .status-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            font-size: 14px;
+            color: #ff69b4;
+            position: absolute;
+            top: 15px;
+        }
+        
+        .now-playing {
+            margin-top: 10px;
+            font-style: italic;
+            color: #ff69b4;
+            font-size: 14px;
+            background: #ffecf0;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 2px dashed #ffb6c1;
+        }
+        
+        .hearts {
+            position: absolute;
+            font-size: 20px;
+            color: #ff69b4;
+            opacity: 0.7;
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        .hearts:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .hearts:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+        
+        .hearts:nth-child(3) {
+            bottom: 15%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+        
+        .hearts:nth-child(4) {
+            bottom: 25%;
+            right: 10%;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(10deg);
+            }
+        }
+        
+        .message {
+            position: absolute;
+            bottom: 80px;
+            background: #ffecf0;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: #ff1493;
+            font-size: 16px;
+            border: 2px dashed #ffb6c1;
+        }
+    </style>
+</head>
+<body>
+    <div class="ipad">
+        <div class="screen">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>eu te amo caique</span>
+            </div>
+            
+            <div class="album-art">
+                <svg class="deftones-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#ff69b4" stroke-width="2"/>
+                    <text x="50" y="55" font-family="Arial" font-size="12" fill="#ff1493" text-anchor="middle">DEFTONES</text>
+                    <text x="50" y="70" font-family="Arial" font-size="8" fill="#ff69b4" text-anchor="middle">CHERRY WAVES</text>
+                </svg>
+            </div>
+            
+            <div class="song-info">
+                <h1 class="song-title">Cherry Waves</h1>
+                <p class="song-artist">Deftones</p>
+            </div>
+            
+            <div class="progress-container" id="progress-container">
+                <div class="progress" id="progress"></div>
+            </div>
+            
+            <div class="time-display">
+                <span id="current-time">0:00</span>
+                <span id="total-time">4:29</span>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" id="prev">⏮</button>
+                <button class="control-btn play-btn" id="play">▶</button>
+                <button class="control-btn" id="next">⏭</button>
+            </div>
+            
+            <div class="volume-controls">
+                <span>🔈</span>
+                <input type="range" class="volume-slider" id="volume" min="0" max="1" step="0.01" value="0.7">
+                <span>🔊</span>
+            </div>
+            
+            <p class="now-playing"> ❤️ </p>
+            
+            
+            
+            <!-- Elementos decorativos -->
+            <div class="hearts">❤️</div>
+            <div class="hearts">❤️</div>
+            <div class="hearts">❤️</div>
+            <div class="hearts">❤️</div>
+        </div>
+        
+        <div class="home-button"></div>
+    </div>
+
+    <audio id="audio-player">
+        <!-- Substitua pelo arquivo real -->
+        <source src="cherrywaves.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audioPlayer = document.getElementById('audio-player');
+            const playBtn = document.getElementById('play');
+            const progressBar = document.getElementById('progress');
+            const progressContainer = document.getElementById('progress-container');
+            const currentTimeEl = document.getElementById('current-time');
+            const totalTimeEl = document.getElementById('total-time');
+            const volumeSlider = document.getElementById('volume');
+            
+            // Configurar o player de áudio
+            let isPlaying = false;
+            
+            // Funcionalidade de play e pause
+            function togglePlayback() {
+                if (isPlaying) {
+                    pauseAudio();
+                } else {
+                    playAudio();
+                }
+            }
+            
+            function playAudio() {
+                audioPlayer.play();
+                playBtn.innerHTML = '⏸';
+                isPlaying = true;
+            }
+            
+            function pauseAudio() {
+                audioPlayer.pause();
+                playBtn.innerHTML = '▶';
+                isPlaying = false;
+            }
+            
+            // Atualizar barra de progresso
+            function updateProgress(e) {
+                const { duration, currentTime } = e.srcElement;
+                if (isNaN(duration)) return;
+                
+                // Atualizar largura da barra de progresso
+                const progressPercent = (currentTime / duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // Atualizar display de tempo
+                currentTimeEl.textContent = formatTime(currentTime);
+                
+                // Atualizar tempo total no primeiro carregamento
+                if (duration && totalTimeEl.textContent === '0:00') {
+                    totalTimeEl.textContent = formatTime(duration);
+                }
+            }
+            
+            // Definir progresso ao clicar na barra de progresso
+            function setProgress(e) {
+                const width = this.clientWidth;
+                const clickX = e.offsetX;
+                const duration = audioPlayer.duration;
+                
+                audioPlayer.currentTime = (clickX / width) * duration;
+            }
+            
+            // Formatar tempo em minutos:segundos
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+            
+            // Definir volume
+            function setVolume() {
+                audioPlayer.volume = volumeSlider.value;
+            }
+            
+            // Event listeners
+            playBtn.addEventListener('click', togglePlayback);
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            audioPlayer.addEventListener('ended', () => {
+                playBtn.innerHTML = '▶';
+                isPlaying = false;
+                progressBar.style.width = '0%';
+                currentTimeEl.textContent = '0:00';
+            });
+            progressContainer.addEventListener('click', setProgress);
+            volumeSlider.addEventListener('input', setVolume);
+            
+            // Inicializar volume
+            audioPlayer.volume = volumeSlider.value;
+            
+            // Tentar reproduzir áudio quando o usuário interagir com a página
+            document.addEventListener('click', function firstClick() {
+                // Isso ajuda com restrições de autoplay
+                audioPlayer.play().then(() => {
+                    audioPlayer.pause();
+                    playBtn.innerHTML = '▶';
+                    isPlaying = false;
+                }).catch(err => {
+                    console.log("Autoplay prevented: ", err);
+                });
+                
+                document.removeEventListener('click', firstClick);
+            });
+        });
+    </script>
+</body>
+</html>
